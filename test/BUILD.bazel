@@ -1,0 +1,40 @@
+load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_test")
+load("@rules_shell//shell:sh_test.bzl", "sh_test")
+
+cc_test(
+    name = "hello",
+    srcs = ["hello.cc"],
+)
+
+cc_test(
+    name = "c_test",
+    srcs = ["c_test.c"],
+)
+
+cc_binary(
+    name = "asan_check",
+    srcs = ["asan_check.cc"],
+    copts = ["-fsanitize=address"],
+    linkopts = ["-fsanitize=address"],
+)
+
+sh_test(
+    name = "asan_test",
+    srcs = ["asan_test.sh"],
+    args = ["$(location :asan_check)"],
+    data = [":asan_check"],
+)
+
+cc_binary(
+    name = "ubsan_check",
+    srcs = ["ubsan_check.cc"],
+    copts = ["-fsanitize=undefined"],
+    linkopts = ["-fsanitize=undefined"],
+)
+
+sh_test(
+    name = "ubsan_test",
+    srcs = ["ubsan_test.sh"],
+    args = ["$(location :ubsan_check)"],
+    data = [":ubsan_check"],
+)

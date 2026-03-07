@@ -1,0 +1,3 @@
+test --test_output=errors
+test --keep_going
+build --symlink_prefix=/
