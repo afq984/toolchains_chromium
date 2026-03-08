@@ -32,6 +32,12 @@ cc_binary(
     linkopts = ["-fsanitize=undefined"],
 )
 
+cc_binary(
+    name = "shared_lib.so",
+    srcs = ["shared_lib.cc"],
+    linkshared = True,
+)
+
 sh_test(
     name = "ubsan_test",
     srcs = ["ubsan_test.sh"],
