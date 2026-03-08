@@ -1,13 +1,25 @@
-"""Repository rule that downloads the Chromium Clang toolchain and generates
-a BUILD file compatible with toolchains_llvm.
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+"""Repository rule that downloads the Chromium Clang toolchain.
 
 Chromium's Clang tarball layout differs from standard LLVM releases:
 - No include/c++/v1/ (Chromium builds libc++ from source)
-- No bin/clang-cpp, bin/llvm-profdata, bin/llvm-cov, bin/llvm-as,
-  bin/llvm-dwp, bin/llvm-ranlib
+- Several tools missing (clang-cpp, llvm-profdata, llvm-cov, etc.)
 
-This rule patches the download to be compatible with toolchains_llvm's
-expected filegroup targets.
+This rule patches the download by creating stub scripts for missing
+tools and an empty include/c++/v1/ directory.
 """
 
 _STUB_TOOLS = [
