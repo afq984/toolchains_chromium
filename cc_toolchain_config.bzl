@@ -25,6 +25,7 @@ load(
     "flag_group",
     "flag_set",
     "tool_path",
+    "variable_with_value",
     "with_feature_set",
 )
 load("@rules_cc//cc:defs.bzl", "CcToolchainConfigInfo", "cc_common")
@@ -78,10 +79,23 @@ def _impl(ctx):
             enabled = True,
             flag_sets = [flag_set(
                 actions = [ACTION_NAMES.cpp_link_static_library],
-                flag_groups = [flag_group(
-                    flags = ["rcsD", "%{output_execpath}"],
-                    expand_if_available = "output_execpath",
-                )],
+                flag_groups = [
+                    flag_group(
+                        flags = ["rcsD", "%{output_execpath}"],
+                        expand_if_available = "output_execpath",
+                    ),
+                    flag_group(
+                        iterate_over = "libraries_to_link",
+                        flag_groups = [flag_group(
+                            flags = ["%{libraries_to_link.name}"],
+                            expand_if_equal = variable_with_value(
+                                name = "libraries_to_link.type",
+                                value = "object_file",
+                            ),
+                        )],
+                        expand_if_available = "libraries_to_link",
+                    ),
+                ],
             )],
         ),
         feature(

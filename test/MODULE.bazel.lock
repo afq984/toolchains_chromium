@@ -2817,7 +2817,7 @@
     },
     "@@toolchains_chromium+//:extensions.bzl%chromium": {
       "general": {
-        "bzlTransitiveDigest": "25OaZETx6D3rwyYoADbGyvqPeB/11KxWhsH1bR9kNq4=",
+        "bzlTransitiveDigest": "c9VK6HIcMIXS6uZ5oJTBctclrQfzpHjWlab4GAxPaVE=",
         "usagesDigest": "cS0TQT2UWf6Kevb1/yjBgfx1XjiPJjWeDBGhS/Jm698=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},

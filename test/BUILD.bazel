@@ -33,11 +33,31 @@ cc_library(
 )
 
 cc_test(
-    name = "static_lib_test",
+    name = "lib_test",
     srcs = ["static_lib_test.cc"],
     deps = [":add"],
 )
 
+# linkstatic = True forces use of .a instead of .so, exercising archiver_flags.
+cc_test(
+    name = "lib_test_linkstatic",
+    srcs = ["static_lib_test.cc"],
+    linkstatic = True,
+    deps = [":add"],
+)
+
+cc_test(
+    name = "lib_test_linkdynamic",
+    srcs = ["static_lib_test.cc"],
+    linkstatic = False,
+    deps = [":add"],
+)
+
+cc_binary(
+    name = "shared_lib.so",
+    srcs = ["shared_lib.cc"],
+    linkshared = True,
+)
 
 cc_binary(
     name = "asan_check",
@@ -58,12 +78,6 @@ cc_binary(
     srcs = ["ubsan_check.cc"],
     copts = ["-fsanitize=undefined"],
     linkopts = ["-fsanitize=undefined"],
-)
-
-cc_binary(
-    name = "shared_lib.so",
-    srcs = ["shared_lib.cc"],
-    linkshared = True,
 )
 
 sh_test(
