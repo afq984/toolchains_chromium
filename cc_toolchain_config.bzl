@@ -16,6 +16,7 @@
 
 load(
     "@rules_cc//cc:action_names.bzl",
+    "ACTION_NAMES",
     "ACTION_NAME_GROUPS",
 )
 load(
@@ -72,6 +73,17 @@ def _impl(ctx):
         )]
 
     features = resource_dir_feature + [
+        feature(
+            name = "archiver_flags",
+            enabled = True,
+            flag_sets = [flag_set(
+                actions = [ACTION_NAMES.cpp_link_static_library],
+                flag_groups = [flag_group(
+                    flags = ["rcsD", "%{output_execpath}"],
+                    expand_if_available = "output_execpath",
+                )],
+            )],
+        ),
         feature(
             name = "default_compile_flags",
             enabled = True,

@@ -87,17 +87,42 @@ def chromium_toolchain_targets(clang_label, sysroots, targets, llvm_version):
             ],
         )
 
+        native.filegroup(
+            name = "ar_files_" + suffix,
+            srcs = local_tools + [clang_label + "//:ar"],
+        )
+
+        native.filegroup(
+            name = "as_files_" + suffix,
+            srcs = local_tools + [clang_label + "//:clang"],
+        )
+
+        native.filegroup(
+            name = "dwp_files_" + suffix,
+            srcs = local_tools + [clang_label + "//:dwp"],
+        )
+
+        native.filegroup(
+            name = "objcopy_files_" + suffix,
+            srcs = local_tools + [clang_label + "//:objcopy"],
+        )
+
+        native.filegroup(
+            name = "strip_files_" + suffix,
+            srcs = local_tools + [clang_label + "//:strip"],
+        )
+
         cc_toolchain(
             name = "cc_toolchain_" + suffix,
             toolchain_config = ":config_" + suffix,
             all_files = ":all_files_" + suffix,
             compiler_files = ":compiler_files_" + suffix,
             linker_files = ":linker_files_" + suffix,
-            ar_files = clang_label + "//:ar",
-            as_files = clang_label + "//:clang",
-            dwp_files = clang_label + "//:dwp",
-            objcopy_files = clang_label + "//:objcopy",
-            strip_files = clang_label + "//:strip",
+            ar_files = ":ar_files_" + suffix,
+            as_files = ":as_files_" + suffix,
+            dwp_files = ":dwp_files_" + suffix,
+            objcopy_files = ":objcopy_files_" + suffix,
+            strip_files = ":strip_files_" + suffix,
         )
 
         native.toolchain(
