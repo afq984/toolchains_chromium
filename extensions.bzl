@@ -45,7 +45,7 @@ def _chromium_impl(module_ctx):
 
     for mod in module_ctx.modules:
         if not mod.is_root:
-            fail("Only the root module can use the 'chromium' extension")
+            continue
 
         for tag in mod.tags.toolchain:
             name = tag.name
